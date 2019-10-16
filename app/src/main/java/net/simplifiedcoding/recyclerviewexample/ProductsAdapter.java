@@ -5,8 +5,11 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
+import android.widget.Switch;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.List;
 
@@ -34,12 +37,15 @@ public class ProductsAdapter extends RecyclerView.Adapter<ProductsAdapter.Produc
 
     @Override
     public void onBindViewHolder(ProductViewHolder holder, int position) {
-        Product product = productList.get(position);
+        final Product product = productList.get(position);
 
         holder.textViewTitle.setText(product.getTitle());
-        holder.textViewShortDesc.setText(product.getShortdesc());
-        holder.textviewPrice.setText(String.valueOf(product.getPrice()));
-        holder.textViewRating.setText(String.valueOf(product.getRating()));
+        holder.test.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                Toast.makeText(mCtx,product.getTitle()+" "+b,Toast.LENGTH_SHORT).show();
+            }
+        });
 //        holder.imageView.setImageDrawable(mCtx.getResources().getDrawable(product.getImage(), null));
     }
 
@@ -52,11 +58,12 @@ public class ProductsAdapter extends RecyclerView.Adapter<ProductsAdapter.Produc
 
         ImageView imageView;
         TextView textViewTitle, textViewShortDesc, textViewRating, textviewPrice;
+        Switch test;
 
         public ProductViewHolder(View itemView) {
             super(itemView);
-
             imageView = itemView.findViewById(R.id.imageView);
+            test = itemView.findViewById(R.id.test);
             textViewTitle = itemView.findViewById(R.id.textViewTitle);
             textViewShortDesc = itemView.findViewById(R.id.textViewShortDesc);
             textViewRating = itemView.findViewById(R.id.textViewRating);
